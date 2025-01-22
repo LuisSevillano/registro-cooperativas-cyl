@@ -4,7 +4,7 @@
 </script>
 
 <div class="section">
-	<p>Puedes utilizar los siguientes filtros para ajustar los resultados de búsqueda</p>
+	<p>Puedes utilizar los siguientes filtros para ajustar los resultados de búsqueda.</p>
 	<div class="filters">
 		<div class="filter">
 			<FilterName />

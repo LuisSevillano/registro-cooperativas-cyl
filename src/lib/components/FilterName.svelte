@@ -3,7 +3,7 @@
 </script>
 
 <label for="f-denominacion">
-	<span>Denominación de la cooperativa:</span>
+	<span>Denominación de la cooperativa</span>
 	<div class="input">
 		<input
 			type="text"
