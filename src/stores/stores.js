@@ -1,23 +1,25 @@
 import { writable, derived } from 'svelte/store';
-import { cooperativas } from '../lib/data.js';
+import cooperativas from '$lib/processedData.json';
 
 // Datos originales
 export const defaultData = writable(cooperativas);
 
 // Filtro de entrada
 export const filterValue = writable('');
-export const selectedTypes = writable(['VIVIENDAS', 'CONSUMIDORES Y USUARIOS']);
+export const selectedTypes = writable(['Viviendas', 'Consumidores y usuarios']);
+export const selectedCategories = writable([]);
 
 // Store que filtra los datos según la entrada
 export const filteredData = derived(
-	[defaultData, filterValue, selectedTypes],
-	([$defaultData, $filterValue, $selectedTypes]) =>
+	[defaultData, filterValue, selectedTypes, selectedCategories],
+	([$defaultData, $filterValue, $selectedTypes, $selectedCategories]) =>
 		$defaultData.filter(
 			(item) =>
 				// Filtro por denominación
 				item.denominacion.toLowerCase().includes($filterValue.toLowerCase()) &&
 				// Filtro por tipos (solo si hay seleccionados)
-				($selectedTypes.length === 0 || $selectedTypes.includes(item.clase))
+				($selectedTypes.length === 0 || $selectedTypes.includes(item.clase)) &&
+				($selectedCategories.length === 0 || $selectedCategories.includes(item.categoria))
 		)
 );
 
@@ -46,6 +48,18 @@ export const typesDefault = derived(
 		return uniqueTypes.sort((a, b) => {
 			const aSelected = $selectedTypes.includes(a) ? -1 : 1;
 			const bSelected = $selectedTypes.includes(b) ? -1 : 1;
+			return aSelected - bSelected;
+		});
+	}
+);
+
+export const categoriesDefault = derived(
+	[defaultData, selectedCategories],
+	([$defaultData, $selectedCategories]) => {
+		const uniqueTypes = Array.from(new Set($defaultData.map((row) => row.categoria)));
+		return uniqueTypes.sort((a, b) => {
+			const aSelected = $selectedCategories.includes(a) ? -1 : 1;
+			const bSelected = $selectedCategories.includes(b) ? -1 : 1;
 			return aSelected - bSelected;
 		});
 	}
