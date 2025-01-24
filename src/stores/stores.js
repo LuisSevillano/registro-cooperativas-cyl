@@ -15,10 +15,11 @@ export const filteredData = derived(
 	([$defaultData, $filterValue, $selectedTypes, $selectedCategories]) =>
 		$defaultData.filter(
 			(item) =>
-				// Filtro por denominación
-				item.denominacion.toLowerCase().includes($filterValue.toLowerCase()) &&
+				// Filtro por denominación con normalización
+				normalizeText(item.denominacion).includes(normalizeText($filterValue)) &&
 				// Filtro por tipos (solo si hay seleccionados)
 				($selectedTypes.length === 0 || $selectedTypes.includes(item.clase)) &&
+				// Filtro por categorías (solo si hay seleccionadas)
 				($selectedCategories.length === 0 || $selectedCategories.includes(item.categoria))
 		)
 );
@@ -68,3 +69,10 @@ export const categoriesDefault = derived(
 export const types = derived(typesDefault, ($typesDefault) =>
 	$typesDefault.filter((type) => selectedTypes.includes(type))
 );
+
+function normalizeText(text) {
+	return text
+		.normalize('NFD')
+		.replace(/[\u0300-\u036f]/g, '')
+		.toLowerCase();
+}
