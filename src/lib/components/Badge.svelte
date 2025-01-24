@@ -1,17 +1,17 @@
 <script>
-	import { selectedTypes } from '../../stores/stores.js';
 	export let type = '';
 	export let index;
+	export let selectedItems;
 
 	// Determinar si el badge está activo basado en el store
-	$: active = $selectedTypes.includes(type);
+	$: active = $selectedItems.includes(type);
 
 	// Manejar clics en el badge
 	function toggleType() {
 		if (active) {
-			selectedTypes.update((types) => types.filter((t) => t !== type));
+			selectedItems.update((types) => types.filter((t) => t !== type));
 		} else {
-			selectedTypes.update((types) => [...types, type]);
+			selectedItems.update((types) => [...types, type]);
 		}
 	}
 </script>
@@ -31,10 +31,11 @@
 	label {
 		font-size: 0.8rem;
 		border-radius: 9999px;
-		color: rgb(209 213 219);
+		color: rgb(160 169 183);
 		background-color: rgb(55 65 81);
 		cursor: pointer;
 		padding: 0.125rem 0.625rem;
+		margin-right: 0.5rem;
 	}
 	input[type='checkbox'] {
 		opacity: 0;
