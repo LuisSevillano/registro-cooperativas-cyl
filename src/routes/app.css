@@ -58,8 +58,9 @@ ul {
 }
 
 a {
-	/* text-decoration: none; */
+	text-decoration: none;
 	color: inherit;
+	border-bottom: 1px solid rgb(91, 83, 46);
 }
 
 ul li a {
