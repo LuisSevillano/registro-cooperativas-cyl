@@ -1,8 +1,7 @@
 <script>
 	import Icon from '../ui/Icon.svelte';
-	import { defaultData, sortBy, data } from '../../stores/stores.js';
+	import { sortBy, data } from '../../stores/stores.js';
 
-	import { format, getMaxItems } from '../utils.js';
 	function sort(column) {
 		if ($sortBy !== undefined) {
 			if ($sortBy.col === column) {
@@ -15,7 +14,7 @@
 		}
 	}
 
-	const cols = ['denominacion', 'provincia', 'localidad', 'clase', 'numero'];
+	const cols = ['denominacion', 'clase', 'provincia'];
 </script>
 
 <div class="table-wrapper">
